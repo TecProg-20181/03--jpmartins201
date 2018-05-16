@@ -1,5 +1,6 @@
 import random
 import string
+import os
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -94,6 +95,7 @@ class Hangman:
     def gameEngine(self):
 
         while self.isWordGuessed() == False and self.attempts > 0:
+            
             print 'You have ', self.attempts, 'attempts left.'
 
             available = self.getAvailableLetters()
@@ -101,16 +103,18 @@ class Hangman:
 
             letter = raw_input('Please guess a letter: ')
             if letter in self.lettersGuessed:
+                os.system('clear')
                 print 'Oops! You have already guessed that letter: '
 
             elif letter in self.secretWord:
                 self.lettersGuessed.append(letter)
-
-
+                os.system('clear')
                 print 'Good guess: '
+                
             else:
                 self.attempts -=1
                 self.lettersGuessed.append(letter)
+                os.system('clear')
                 print 'Oops! That letter is not in my word: '
 
             self.checkGuessedLetter(letter)
