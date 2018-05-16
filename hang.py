@@ -1,6 +1,7 @@
 import random
 import string
 import os
+import sys
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -32,9 +33,16 @@ class Hangman:
         """
 
         print "Loading word list from file..."
+        try:
+            inFile = open(WORDLIST_FILENAME, 'r', 0)# inFile: file
+        except IOError:
+            print "Cannot open", WORDLIST_FILENAME, ", please try again!"
+            sys.exit(0)
 
-        inFile = open(WORDLIST_FILENAME, 'r', 0)# inFile: file
         line = inFile.readline()# line: string
+        if not line:
+            print "The file is empty, please try again!"
+            sys.exit(0)
         wordlist = string.split(line)# wordlist: list of strings
 
         print " ", len(wordlist), "words loaded."
@@ -65,7 +73,7 @@ class Hangman:
     def initialMessage(self):
 
         print 'Welcome to the game, Hangman!'
-        print 'I am thinking of a word that is', len(self.secretWord), ' letters long.'
+        print 'I am thinking of a word that is', len(self.secretWord), 'letters long.'
         print '-------------'
 
     def availableLetters(self,available):
@@ -129,3 +137,4 @@ if __name__ == "__main__":
     hangman = Hangman()
     hangman.initialMessage()
     hangman.gameEngine()
+
